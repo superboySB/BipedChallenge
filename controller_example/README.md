@@ -15,20 +15,20 @@ Install the `drake-dev` APT package by following the instructions found at:
 
 For this example, also install the `build-essential` and `cmake` APT packages:
 
-```[bash]
+```sh
 sudo apt-get update
 sudo apt-get --no-install-recommends install build-essential cmake 
 ```
 
 The controller uses the SDL2 library. It can be installed using apt on Ubuntu 20:
 
-```[bash]
+```sh
 sudo apt install libsdl2-dev
 sudo apt install libsdl2-ttf-dev
 ```
 
 ## compile
-```[bash]
+```sh
 mkdir build
 cd build
 cmake ..

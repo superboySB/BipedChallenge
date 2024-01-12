@@ -6,11 +6,13 @@
 ```sh
 wget https://roban.lejurobot.com/humanoid-tongverselite/tongverselite-release-docker_20240104.tar.gz
 
+md5sum -c checksum.txt
+
 docker load -i tongverselite-release-docker_20240104.tar.gz
 
 xhost +
 
-docker run --name tongverselite-release -itd --gpus all -e "ACCEPT_EULA=Y" --rm --network=host \
+docker run --name tongverselite-release -itd --gpus all -e "ACCEPT_EULA=Y" --network=host \
   --ulimit rtprio=99 -e "PRIVACY_CONSENT=Y" --privileged \
   -v /tmp/.X11-unix:/tmp/.X11-unix:ro -e DISPLAY=$DISPLAY \
   -v ~/docker/isaac-sim_2023.1.0/cache/kit:/isaac-sim/kit/cache:rw \
@@ -25,9 +27,18 @@ docker run --name tongverselite-release -itd --gpus all -e "ACCEPT_EULA=Y" --rm 
 ```
 先尝试用虚拟机的思路来使用容器
 ```sh
+docker exec -it tongverselite-release /bin/bash
+
+apt-get update && apt-get install git dos2unix
+
 rm -rf /BipedChallenge && cd /
 
 git clone https://github.com/superboySB/CRAIC2024
 
-mv /CRAIC2024 /BipedChallenge
+mv /CRAIC2024 /BipedChallenge && cd /BipedChallenge
 ```
+尝试运行demo，task从1-6
+```sh
+bash examples/launch_task.sh <task-id>
+```
+如果出现转码问题，可以用`dos2unix examples/launch_task.sh`转换编码
