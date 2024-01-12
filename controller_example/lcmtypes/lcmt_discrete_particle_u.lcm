@@ -1,0 +1,8 @@
+// package xxx?
+
+struct lcmt_discrete_particle_u
+{
+  int64_t timestamp;
+
+  double force;
+}
