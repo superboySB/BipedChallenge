@@ -31,11 +31,11 @@ docker exec -it tongverselite-release /bin/bash
 
 apt-get update && apt-get install git dos2unix
 
-rm -rf /BipedChallenge && cd /
+cd / && rm -rf /BipedChallenge
 
-git clone https://github.com/superboySB/CRAIC2024
+git clone https://github.com/superboySB/BipedChallenge
 
-mv /CRAIC2024 /BipedChallenge && cd /BipedChallenge
+cd /BipedChallenge
 ```
 尝试运行demo，task从1-6
 ```sh
