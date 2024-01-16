@@ -13,8 +13,10 @@ docker load -i tongverselite-release-docker_20240104.tar.gz
 xhost +
 
 docker run --name tongverselite-release -itd --gpus all -e "ACCEPT_EULA=Y" --network=host \
-  --ulimit rtprio=99 -e "PRIVACY_CONSENT=Y" --privileged \
-  -v /tmp/.X11-unix:/tmp/.X11-unix:ro -e DISPLAY=$DISPLAY \
+  --ulimit rtprio=99 \
+  -e "PRIVACY_CONSENT=Y" \
+  -v $HOME/.Xauthority:/root/.Xauthority \
+  -e DISPLAY \
   -v ~/docker/isaac-sim_2023.1.0/cache/kit:/isaac-sim/kit/cache:rw \
   -v ~/docker/isaac-sim_2023.1.0/cache/ov:/root/.cache/ov:rw \
   -v ~/docker/isaac-sim_2023.1.0/cache/pip:/root/.cache/pip:rw \
