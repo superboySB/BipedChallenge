@@ -34,19 +34,9 @@ apt-get update && apt-get install git dos2unix vulkan-tools
 cd / && rm -rf /BipedChallenge
 
 git clone https://github.com/superboySB/BipedChallenge && cd /BipedChallenge
-
-echo 'SCRIPT_DIR=/BipedChallenge' >> /root/.bashrc
-
-echo 'PROJECT_DIR=$(realpath "$SCRIPT_DIR")' >> /root/.bashrc
-
-echo 'EXP_PATH=/isaac-sim/apps' >> /root/.bashrc
-
-echo 'source /isaac-sim/setup_python_env.sh' >> /root/.bashrc 
-
-source /root/.bashrc
 ```
-尝试运行demo，task从1-6
+尝试运行demo，task从1-6指定。
 ```sh
 bash examples/launch_task.sh <task-id>
 ```
-如果出现转码问题，可以用`dos2unix examples/launch_task.sh`转换编码
+如果出现转码问题，可以用`dos2unix examples/launch_task.sh`转换编码。因为我暂时没有ubuntu台式机，我选择用headless模式运行脚本，然后本机接steaming client，这个做法如果有台式机可以去掉`--no-window`
