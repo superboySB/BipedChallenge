@@ -4,6 +4,8 @@
 ## 安装指南
 下载官方镜像并且构建容器
 ```sh
+git clone https://github.com/superboySB/BipedChallenge && cd ./BipedChallenge
+
 wget https://roban.lejurobot.com/humanoid-tongverselite/tongverselite-release-docker_20240104.tar.gz
 
 md5sum -c checksum.txt
@@ -17,10 +19,6 @@ bash docker-run-release.sh
 docker exec -it tongverselite-release /bin/bash
 
 apt-get update && apt-get install git dos2unix vulkan-tools
-
-cd / && rm -rf /BipedChallenge
-
-git clone https://github.com/superboySB/BipedChallenge && cd /BipedChallenge
 ```
 尝试运行demo，task从1-6指定。
 ```sh
