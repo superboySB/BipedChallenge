@@ -10,24 +10,9 @@ md5sum -c checksum.txt
 
 docker load -i tongverselite-release-docker_20240104.tar.gz
 
-xhost +
-
-docker run --name tongverselite-release -itd --gpus all -e "ACCEPT_EULA=Y" --network=host \
-  --ulimit rtprio=99 \
-  -e "PRIVACY_CONSENT=Y" \
-  -v $HOME/.Xauthority:/root/.Xauthority \
-  -e DISPLAY \
-  -v ~/docker/isaac-sim_2023.1.0/cache/kit:/isaac-sim/kit/cache:rw \
-  -v ~/docker/isaac-sim_2023.1.0/cache/ov:/root/.cache/ov:rw \
-  -v ~/docker/isaac-sim_2023.1.0/cache/pip:/root/.cache/pip:rw \
-  -v ~/docker/isaac-sim_2023.1.0/cache/glcache:/root/.cache/nvidia/GLCache:rw \
-  -v ~/docker/isaac-sim_2023.1.0/cache/computecache:/root/.nv/ComputeCache:rw \
-  -v ~/docker/isaac-sim_2023.1.0/logs:/root/.nvidia-omniverse/logs:rw \
-  -v ~/docker/isaac-sim_2023.1.0/data:/root/.local/share/ov/data:rw \
-  -v ~/docker/isaac-sim_2023.1.0/documents:/root/Documents:rw \
-  tongverselite-release:v1.0 /bin/bash
+bash docker-run-release.sh
 ```
-先尝试用虚拟机的思路来使用容器
+如果出现转码问题，可以用`dos2unix docker-run-release.sh`转换编码,先尝试用虚拟机的思路来使用容器
 ```sh
 docker exec -it tongverselite-release /bin/bash
 

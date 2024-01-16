@@ -2,7 +2,7 @@ SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 PROJECT_DIR=$(realpath "$SCRIPT_DIR")
 
 xhost +
-docker run --name tongverselite-release -it --gpus all -e "ACCEPT_EULA=Y" --rm --network=host \
+docker run --name tongverselite-release -itd --gpus all -e "ACCEPT_EULA=Y" --network=host \
   --ulimit rtprio=99 \
   -e "PRIVACY_CONSENT=Y" \
   -v $HOME/.Xauthority:/root/.Xauthority \
