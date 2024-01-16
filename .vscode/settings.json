@@ -1,0 +1,5 @@
+{
+    "python.pythonPath": "/isaac-sim/kit/python/bin/python3",
+    "python.linting.enabled": true,
+    "python.linting.pylintEnabled": true,
+}

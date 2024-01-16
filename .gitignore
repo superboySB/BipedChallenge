@@ -6,7 +6,6 @@ tmp_build/*
 *docker*.tar.gz
 
 .idea/
-.vscode/
 
 # .gitkeep
 !.gitkeep
@@ -38,6 +37,5 @@ MANIFEST
 
 # IDE files
 .idea
-.vscode
 
 tongverselite-release-docker_20240104.tar.gz

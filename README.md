@@ -29,13 +29,21 @@ docker run --name tongverselite-release -itd --gpus all -e "ACCEPT_EULA=Y" --net
 ```sh
 docker exec -it tongverselite-release /bin/bash
 
-apt-get update && apt-get install git dos2unix
+apt-get update && apt-get install git dos2unix vulkan-tools
 
 cd / && rm -rf /BipedChallenge
 
-git clone https://github.com/superboySB/BipedChallenge
+git clone https://github.com/superboySB/BipedChallenge && cd /BipedChallenge
 
-cd /BipedChallenge
+echo 'SCRIPT_DIR=/BipedChallenge' >> /root/.bashrc
+
+echo 'PROJECT_DIR=$(realpath "$SCRIPT_DIR")' >> /root/.bashrc
+
+echo 'EXP_PATH=/isaac-sim/apps' >> /root/.bashrc
+
+echo 'source /isaac-sim/setup_python_env.sh' >> /root/.bashrc 
+
+source /root/.bashrc
 ```
 尝试运行demo，task从1-6
 ```sh

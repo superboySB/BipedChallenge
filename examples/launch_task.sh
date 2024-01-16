@@ -6,4 +6,4 @@ cd /leju_controller;
 # wait for server
 sleep 1
 cd /BipedChallenge
-python3 examples/task_launcher.py $1
+/isaac-sim/python.sh examples/task_launcher.py $1
