@@ -2,7 +2,7 @@
 人形机器人创新挑战赛  BIT-LINC队伍方案
 
 ## 安装指南
-下载官方镜像并且构建容器
+下载官方镜像并且构建容器,如果使用windows的话注意不要给docker开WSL2 backend，可能会有vulkan的问题
 ```sh
 git clone https://github.com/superboySB/BipedChallenge && cd ./BipedChallenge
 
