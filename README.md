@@ -24,4 +24,4 @@ apt-get update && apt-get install git gedit dos2unix vulkan-tools
 ```sh
 bash examples/launch_task.sh <task-id>
 ```
-如果出现转码问题，可以用`dos2unix examples/launch_task.sh`转换编码。注意目前这个工程暂时不支持headless模式（学艺不精），亲测需要使用ubuntu+RTX的台式机（需要插屏幕）来运行代码,如果有类似`Failed to acquire IWindowing interface`的错误可以设置`export DISPLAY=:0`
+如果出现转码问题，可以用`dos2unix examples/launch_task.sh`转换编码。注意目前这个工程暂时不支持headless模式（大概率是学艺不精），亲测需要使用ubuntu+RTX的台式机（需要插屏幕）来运行代码,否则会有奇怪问题。如果有类似`Failed to acquire IWindowing interface`的错误可以设置`export DISPLAY=:0`
