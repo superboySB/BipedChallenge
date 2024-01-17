@@ -25,6 +25,7 @@ apt-get update && apt-get install git gedit dos2unix vulkan-tools
 bash examples/launch_task.sh <task-id>
 ```
 如果出现转码问题，可以用`dos2unix examples/launch_task.sh`转换编码。注意目前这个工程暂时不支持headless模式（大概率是学艺不精），亲测需要使用ubuntu+RTX的台式机（需要插屏幕）来运行代码,否则会有奇怪问题。如果有类似`Failed to acquire IWindowing interface`的错误可以设置`export DISPLAY=:0`
-![](docs\demo.gif)
+![demo](./docs/demo.gif)
+
 ## 代码学习计划
 提交`submission`即可，里面包括具体的`vel cmd`以及自己实现的controller（可以考虑用强化学习）。此外，tongverselite的实现被官方做了加密，可以参考`docs/dev-branch-copy`来简单理解。
