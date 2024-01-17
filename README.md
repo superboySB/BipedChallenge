@@ -24,4 +24,4 @@ apt-get update && apt-get install git dos2unix vulkan-tools
 ```sh
 bash examples/launch_task.sh <task-id>
 ```
-如果出现转码问题，可以用`dos2unix examples/launch_task.sh`转换编码。因为我暂时没有ubuntu台式机，我选择用headless模式运行脚本，然后本机接steaming client，这个做法如果有台式机可以去掉`--no-window`
+如果出现转码问题，可以用`dos2unix examples/launch_task.sh`转换编码，暂时不支持headless模式，需要使用ubuntu台式机来运行代码，也可以部署在一个有屏幕的server上、X11转发。

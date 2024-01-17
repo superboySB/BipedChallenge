@@ -1,5 +1,7 @@
 import sys
 
+sys.path.append("/TongVerse/dist/")
+
 import tongverselite as tv  # noqa # pylint: disable=wrong-import-order # isort: skip
 from tongverselite.env import Env
 
