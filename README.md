@@ -18,10 +18,10 @@ bash docker-run-release.sh
 ```sh
 docker exec -it tongverselite-release /bin/bash
 
-apt-get update && apt-get install git dos2unix vulkan-tools
+apt-get update && apt-get install git gedit dos2unix vulkan-tools
 ```
 尝试运行demo，task从1-6指定。
 ```sh
 bash examples/launch_task.sh <task-id>
 ```
-如果出现转码问题，可以用`dos2unix examples/launch_task.sh`转换编码，暂时不支持headless模式，需要使用ubuntu台式机来运行代码，也可以部署在一个有屏幕的server上、X11转发。
+如果出现转码问题，可以用`dos2unix examples/launch_task.sh`转换编码。注意目前这个工程暂时不支持headless模式（学艺不精），亲测需要使用ubuntu+RTX的台式机（需要插屏幕）来运行代码,如果有类似`Failed to acquire IWindowing interface`的错误可以设置`export DISPLAY=:0`
