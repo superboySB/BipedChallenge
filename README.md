@@ -1,6 +1,9 @@
 # CRAIC2024
 人形机器人创新挑战赛  BIT-LINC队伍方案
 
+## 学习计划
+单纯就比赛来说，提交`submission`即可，里面包括具体的`vel cmd`以及自己实现的controller（可以考虑用强化学习）。此外，tongverselite的实现被官方做了assets为主的加密，可以参考`docs/dev-branch-copy`来简单理解框架逻辑。
+
 ## 安装指南
 下载官方镜像并且构建容器,建议使用linux原生机器、或者尝试服务器，不要用windows上的docker服务来做(目前不支持vulkan)
 ```sh
@@ -28,5 +31,11 @@ bash examples/launch_task.sh <task-id>
 
 ![demo](./docs/demo.gif)
 
-## 代码学习计划
-提交`submission`即可，里面包括具体的`vel cmd`以及自己实现的controller（可以考虑用强化学习）。此外，tongverselite的实现被官方做了加密，可以参考`docs/dev-branch-copy`来简单理解。
+## Useful Tips
+对于example文件来说，维护行为树(task 1-5)，可以压缩和解压文件，会导致原始文件被删除，比赛官方提供的标注为`example`
+```sh
+gzip -c task{id}_cmd.json > task{id}_cmd.json.gz   # 压缩
+
+# gunzip task_{id}_cmd.json # 解压(用于还原检查)
+```
+
