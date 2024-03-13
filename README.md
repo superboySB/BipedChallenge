@@ -36,6 +36,6 @@ bash examples/launch_task.sh <task-id>
 ```sh
 gzip -c task{id}_cmd.json > task{id}_cmd.json.gz   # 压缩
 
-# gunzip task_{id}_cmd.json # 解压(用于还原检查)
+# gunzip task_{id}_cmd.json,gz # 解压(用于还原检查完整性)
 ```
 
