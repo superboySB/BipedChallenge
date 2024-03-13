@@ -38,5 +38,6 @@ MANIFEST
 # IDE files
 .idea
 
-tongverselite-release-docker_20240104.tar.gz
+*.tar.gz
+*.tar
 core

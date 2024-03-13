@@ -9,19 +9,19 @@
 ```sh
 git clone https://github.com/superboySB/BipedChallenge && cd ./BipedChallenge
 
-wget https://roban.lejurobot.com/humanoid-tongverselite/tongverselite-release-docker_20240104.tar.gz
+docker build -t superboysb/bipedchallenge:20240314 .
 
-md5sum -c checksum.txt
+# wget https://roban.lejurobot.com/humanoid-tongverselite/tongverselite-release-docker_20240104.tar.gz
 
-docker load -i tongverselite-release-docker_20240104.tar.gz
+# md5sum -c checksum.txt
+
+# docker load -i tongverselite-release-docker_20240104.tar.gz
 
 bash docker-run-release.sh
 ```
 如果出现转码问题，可以用`dos2unix docker-run-release.sh`转换编码,先尝试用虚拟机的思路来使用容器
 ```sh
-docker exec -it tongverselite-release /bin/bash
-
-apt-get update && apt-get install git gedit dos2unix vulkan-tools git
+docker exec -it bipedchallenge /bin/bash
 ```
 尝试运行demo，task从1-6指定。
 ```sh
@@ -32,7 +32,10 @@ bash examples/launch_task.sh <task-id>
 ![demo](./docs/demo.gif)
 
 ## 运行our solution
-
+很显然solution将不卡随机种子，需要泛化性策略
+```sh
+bash solution/launch_task.sh <task-id>
+```
 
 ## Useful Tips
 对于example文件来说，维护行为树(task 1-5)，可以压缩和解压文件，会导致原始文件被删除，比赛官方提供的标注为`example`

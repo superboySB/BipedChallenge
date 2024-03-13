@@ -2,7 +2,7 @@ SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 PROJECT_DIR=$(realpath "$SCRIPT_DIR")
 
 xhost +
-docker run --name tongverselite-release -itd --gpus all -e "ACCEPT_EULA=Y" --network=host \
+docker run --name bipedchallenge -itd --gpus all -e "ACCEPT_EULA=Y" --network=host \
   --ulimit rtprio=99 \
   -e "PRIVACY_CONSENT=Y" \
   -v $HOME/.Xauthority:/root/.Xauthority \
@@ -16,4 +16,4 @@ docker run --name tongverselite-release -itd --gpus all -e "ACCEPT_EULA=Y" --net
   -v ~/docker/isaac-sim_2023.1.0/data:/root/.local/share/ov/data:rw \
   -v ~/docker/isaac-sim_2023.1.0/documents:/root/Documents:rw \
   -v $PROJECT_DIR:/BipedChallenge:rw \
-  tongverselite-release:v1.0 bash
+  superboysb/bipedchallenge:20240314 bash
