@@ -21,7 +21,7 @@ bash docker-run-release.sh
 ```sh
 docker exec -it tongverselite-release /bin/bash
 
-apt-get update && apt-get install git gedit dos2unix vulkan-tools
+apt-get update && apt-get install git gedit dos2unix vulkan-tools git
 ```
 尝试运行demo，task从1-6指定。
 ```sh
