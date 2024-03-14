@@ -31,6 +31,11 @@ bash examples/launch_task.sh <task-id>
 
 ![demo](./docs/demo.gif)
 
+## 训练
+这玩意不训练controller不行呀，还是需要训练，如果遇到nucleus的问题可能需要初步联网、并且插一个屏幕
+```sh
+bash xxx
+```
 ## 运行our solution
 很显然solution将不卡随机种子，需要泛化性策略
 ```sh

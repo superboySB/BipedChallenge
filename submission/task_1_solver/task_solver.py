@@ -18,7 +18,7 @@ def decompress_data(data):
 
 
 class DummyPlanner:
-    """A dummy planner for task 1 (seed = 66)
+    """A dummy planner for task 1 (seed = 66)  现在seed不是66了
 
     It produces a pre-computed velocity command for accomplishing
     task 1 with random seed 66.
