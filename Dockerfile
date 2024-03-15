@@ -11,7 +11,7 @@ WORKDIR /workspace/
 RUN git clone https://github.com/NVIDIA-Omniverse/OmniIsaacGymEnvs
 RUN cd OmniIsaacGymEnvs && git checkout release/2023.1.0 && /isaac-sim/python.sh -m pip install --upgrade pip && \
     /isaac-sim/python.sh -m pip install -e . && \
-    /isaac-sim/python.sh -m pip install stable-baselines3==2.0.0 wandb tensorboard
+    /isaac-sim/python.sh -m pip install stable-baselines3==2.0.0 wandb tensorboard pygame
 
 # Yolo-world
 WORKDIR /workspace/
