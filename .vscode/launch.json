@@ -1,0 +1,26 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Python: Current File",
+            "type": "python",
+            "request": "launch",
+            "program": "${file}",
+            "console": "integratedTerminal",
+            "justMyCode": false,
+            "env": {
+                "EXP_PATH": "/isaac-sim/apps",
+                "RESOURCE_NAME": "IsaacSim",
+                "CUDA_VISIBLE_DEVICES": "0",
+                "DISPLAY": ":1"
+            },
+            "python": "/isaac-sim/kit/python/bin/python3",
+            "envFile": "/isaac-sim/.vscode/.standalone_examples.env",
+            "preLaunchTask": "setup_python_env",
+            "args": ["--/persistent/isaac/asset_root/default=\"omniverse://my_server\""]
+        }
+    ]
+}
