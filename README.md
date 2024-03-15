@@ -11,12 +11,6 @@ git clone https://github.com/superboySB/BipedChallenge && cd ./BipedChallenge
 
 docker build -t superboysb/bipedchallenge:20240314 .
 
-# wget https://roban.lejurobot.com/humanoid-tongverselite/tongverselite-release-docker_20240104.tar.gz
-
-# md5sum -c checksum.txt
-
-# docker load -i tongverselite-release-docker_20240104.tar.gz
-
 bash docker-run-release.sh
 ```
 如果出现转码问题，可以用`dos2unix docker-run-release.sh`转换编码,先尝试用虚拟机的思路来使用容器
