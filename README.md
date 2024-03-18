@@ -33,7 +33,7 @@ bash xxx
 ## 运行our solution
 很显然solution将不卡随机种子，需要泛化性策略
 ```sh
-bash solution/launch_task.sh <task-id>
+bash submission/launch_task.sh <task-id>
 ```
 
 ## Useful Tips
