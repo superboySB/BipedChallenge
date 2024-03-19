@@ -9,7 +9,7 @@ from tongverselite.tcp import PersistentTcpClient, json2bin
 import time
 
 
-class DummyPlanner:
+class OurPlanner:
     """A dummy planner for task 1 (seed = 66)
 
     It produces a pre-computed velocity command for accomplishing
@@ -28,23 +28,56 @@ class DummyPlanner:
 
         diff_pos = self.goal_center - obs["agent"]["body_state"]["world_pos"]
 
-        if self.cnt_ < 10000:
-            cmd[0] = -diff_pos[0]/8
-            cmd[1] = -diff_pos[1]/8
-        elif self.cnt_ >= 10000 and self.cnt_ < 12500:
+        if self.cnt_ < 2000:
+            cmd[0] = -diff_pos[0]/12
+            cmd[1] = -diff_pos[1]/12
+        elif self.cnt_ >= 2000 and self.cnt_ < 12000:
+            cmd[0] = -diff_pos[0]/9
+            cmd[1] = -diff_pos[1]/9
+        elif self.cnt_ >= 12000 and self.cnt_ < 14000:
+            cmd[0] = -diff_pos[0]/6
+            cmd[1] = -diff_pos[1]/6
+        elif self.cnt_ >= 14000 and self.cnt_ < 16000:
             cmd[0] = -diff_pos[0]/4
             cmd[1] = -diff_pos[1]/4
         else:
             cmd[0] = -diff_pos[0]/2
             cmd[1] = -diff_pos[1]/2
 
-        if obs["agent"]["body_state"]["world_pos"][1] - self.goal_center[1] >= 0.2: 
+
+        if obs["agent"]["body_state"]["world_pos"][1] - self.goal_center[1] >= 0.55 and \
+            obs["agent"]["body_state"]["angular_velocities"][1] > 0:
+            cmd[0] = 2*cmd[0]/3
+            cmd[1] = 2*cmd[1]/3
+            cmd[2] = 1/3
+        elif obs["agent"]["body_state"]["world_pos"][1] - self.goal_center[1] < -0.55 and \
+            obs["agent"]["body_state"]["angular_velocities"][1] < 0:
+            cmd[0] = 2*cmd[0]/3
+            cmd[1] = 2*cmd[1]/3
+            cmd[2] = -1/3
+        elif obs["agent"]["body_state"]["world_pos"][1] - self.goal_center[1] >= 0.45 and \
+              obs["agent"]["body_state"]["world_pos"][1] - self.goal_center[1] < 0.55:
+            cmd[0] = 4*cmd[0]/5
+            cmd[1] = 4*cmd[1]/5
             cmd[2] = 1/6
-        elif obs["agent"]["body_state"]["world_pos"][1] - self.goal_center[1] < -0.2:
+        elif obs["agent"]["body_state"]["world_pos"][1] - self.goal_center[1] < -0.45 and \
+            obs["agent"]["body_state"]["world_pos"][1] - self.goal_center[1] >= -0.55:
+            cmd[0] = 4*cmd[0]/5
+            cmd[1] = 4*cmd[1]/5
             cmd[2] = -1/6
-        elif obs["agent"]["body_state"]["world_pos"][1] - self.goal_center[1] >= 0.1 and obs["agent"]["body_state"]["world_pos"][1] - self.goal_center[1] < 0.2:
-            cmd[2] = -1/12
-        elif obs["agent"]["body_state"]["world_pos"][1] - self.goal_center[1] < -0.1 and obs["agent"]["body_state"]["world_pos"][1] - self.goal_center[1]>=-0.2:
+        elif obs["agent"]["body_state"]["world_pos"][1] - self.goal_center[1] >= 0.3 and \
+              obs["agent"]["body_state"]["world_pos"][1] - self.goal_center[1] < 0.4 and \
+                obs["agent"]["body_state"]["angular_velocities"][1] > 0:
+            cmd[2] = 1/9
+        elif obs["agent"]["body_state"]["world_pos"][1] - self.goal_center[1] < -0.3 and \
+             obs["agent"]["body_state"]["world_pos"][1] - self.goal_center[1] >= -0.4 and \
+                obs["agent"]["body_state"]["angular_velocities"][1] < 0:
+            cmd[2] = -1/9
+        elif obs["agent"]["body_state"]["world_pos"][1] - self.goal_center[1] >= 0.1 and \
+             obs["agent"]["body_state"]["world_pos"][1] - self.goal_center[1] < 0.2:
+            cmd[2] = 1/12
+        elif obs["agent"]["body_state"]["world_pos"][1] - self.goal_center[1] < -0.1 and \
+            obs["agent"]["body_state"]["world_pos"][1] - self.goal_center[1]>=-0.2:
             cmd[2] = -1/12
         else:
             cmd[2] = 0
@@ -93,7 +126,7 @@ class BipedWalkingCtrlClient(PersistentTcpClient):
 class TaskSolver(TaskSolverBase):
     def __init__(self) -> None:
         super().__init__()
-        self.planner_ = DummyPlanner()
+        self.planner_ = OurPlanner()
         self.ctrl_client_ = BipedWalkingCtrlClient(ip="0.0.0.0", port=8800)
 
     def next_action(self, obs: dict) -> dict:

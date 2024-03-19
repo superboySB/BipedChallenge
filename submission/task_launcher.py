@@ -114,6 +114,8 @@ def main(task_id):
         # an empty action will be applied at the very beginning
         # stage to get an observation
         done, success, obs = env.step(action)
+        print("\n\ndone:",done)
+        print("success:",success)
         print(obs)
 
         if done:
