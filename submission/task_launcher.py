@@ -116,7 +116,7 @@ def main(task_id):
         done, success, obs = env.step(action)
         print("\n\ndone:",done)
         print("success:",success)
-        print(obs)
+        # print(obs)
 
         if done:
             if success:

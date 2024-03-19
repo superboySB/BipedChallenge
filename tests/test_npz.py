@@ -1,7 +1,7 @@
 import numpy as np
 
 # 加载npz文件
-data = np.load('/BipedChallenge/docs/dev-branch-copy/leju_kuavo_tongverse-lite/examples/task_1_solver/task1_cmd.npz')
+data = np.load('/BipedChallenge/docs/dev-branch-copy/leju_kuavo_tongverse-lite/examples/task_3_solver/task3_cmd.npz')
 
 # 打印所有包含的文件名
 print(data.files)

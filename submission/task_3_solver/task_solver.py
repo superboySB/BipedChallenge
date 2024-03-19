@@ -17,25 +17,47 @@ class DummyPlanner:
 
     def __init__(self) -> None:
         # get directory of this file
-        dir_path = os.path.dirname(os.path.realpath(__file__))
+        # dir_path = os.path.dirname(os.path.realpath(__file__))
         # pre-computed velocity command sequence
-        cmd_file = f"{dir_path}/task3_cmd.npz"
-
-        self.cmds_ = np.load(cmd_file)["cmd"]
+        # cmd_file = f"{dir_path}/task3_cmd.npz"
+        # self.cmds_ = np.load(cmd_file)["cmd"]
 
         self.cnt_ = 0
+        self.jump_flg = False
+        self.start_pos = None
+        # self.start_obstacle = None
 
     def plan(self, obs: dict) -> List:
         assert isinstance(obs, dict)
+        cmd = np.array([0, 0, 0, -1]).astype(np.float32)
+        if self.start_pos is None:
+            self.start_pos = obs["agent"]["body_state"]["world_pos"][1]
+            # self.start_obstacle = obs["obstacle"]["position"][1]
+            
+        # diff_pos = np.sqrt((obs["obstacle"]["position"][0] - obs["agent"]["body_state"]["world_pos"][0])**2 + \
+        #         (obs["obstacle"]["position"][1] - obs["agent"]["body_state"]["world_pos"][1])**2)
+
+        diff_pos = obs["obstacle"]["position"][1] - self.start_pos
+
+        print(obs["agent"]["body_state"]["world_pos"])
+        print(obs["obstacle"]["position"])
+        print(diff_pos)
+        print(self.jump_flg)
+
+        if diff_pos < 0.7:
+            self.jump_flg = True
+        
+        if self.jump_flg:
+            cmd[-1] = 2
 
         # repeat last cmd when reach the end
-        if self.cnt_ == len(self.cmds_):
-            return self.cmds_[-1]
+        # if self.cnt_ == len(self.cmds_):
+        #     return self.cmds_[-1]
+        # cmd = self.cmds_[self.cnt_]
 
-        cmd = self.cmds_[self.cnt_]
         self.cnt_ += 1
 
-        return cmd
+        return cmd.tolist()
 
 
 class BipedWalkingCtrlClient(PersistentTcpClient):
