@@ -25,6 +25,8 @@ class DummyPlanner:
 
     def plan(self, obs: dict) -> List:
         assert isinstance(obs, dict)
+        print(obs["agent"]["body_state"]["world_pos"])
+        print(obs["goal"])
 
         # repeat last cmd when reach the end
         if self.cnt_ == len(self.cmds_):
