@@ -48,14 +48,13 @@ class DummyPlanner:
             print(obs["pick"])
 
             # repeat last cmd when reach the end
-            if self.cnt_ == len(self.cmds_):
-                return self.cmds_[-1]
+            if self.cnt_ == len(self.cmds_)-1000:
+                cmd = self.cmds_[-1000]
+                cmd[-1] = 0
+                cmd[2] = 1/24
+                return cmd.tolist()
 
             cmd = self.cmds_[self.cnt_]
-        
-            
-            if self.cnt_ > 16500 and self.cnt_ < 17000:
-                cmd[-1] = 0
 
             self.cnt_ += 1
             
