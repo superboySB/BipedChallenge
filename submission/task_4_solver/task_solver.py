@@ -17,7 +17,7 @@ class OurPlanner:
     """
 
     def __init__(self) -> None:
-        self.goal_center = np.array([1.94795, -9.1162, 0.1])
+        self.goal_center = np.array([0.23457, -3.53851, 0.296])
         self.cnt_ = 0
 
     def plan(self, obs: dict) -> List:
@@ -27,64 +27,34 @@ class OurPlanner:
 
         diff_pos = self.goal_center - obs["agent"]["body_state"]["world_pos"]
 
+        # 定义新的四元数 q = [qx, qy, qz, qw] 对应于 'world_orient'
+        q_world_orient = obs["agent"]["body_state"]["world_orient"]
+        # 重新计算欧拉角
+        yaw_world_orient = np.arctan2(2 * (q_world_orient[3] * q_world_orient[2] + q_world_orient[0] * q_world_orient[1]), 1 - 2 * (q_world_orient[1]**2 + q_world_orient[2]**2))
+        pitch_world_orient = np.arcsin(2 * (q_world_orient[3] * q_world_orient[1] - q_world_orient[2] * q_world_orient[0]))
+        roll_world_orient = np.arctan2(2 * (q_world_orient[3] * q_world_orient[0] + q_world_orient[1] * q_world_orient[2]), 1 - 2 * (q_world_orient[0]**2 + q_world_orient[1]**2))
+        # 转换为度
+        yaw_world_orient_deg = np.degrees(yaw_world_orient)
+        pitch_world_orient_deg = np.degrees(pitch_world_orient)
+        roll_world_orient_deg = np.degrees(roll_world_orient)
+        if self.cnt_ % 10 ==0:
+            print(diff_pos)
+            print(yaw_world_orient_deg)
+            print(pitch_world_orient_deg)
+            print(roll_world_orient_deg)
 
-        if self.cnt_ < 3000:
-            cmd[0] = diff_pos[0]/9
-            cmd[1] = diff_pos[1]/9
-        elif self.cnt_ >= 3000 and self.cnt_ < 13000:
-            cmd[0] = diff_pos[0]/9
-            cmd[1] = diff_pos[1]/9
-            cmd[2] = 0.35
-        else:
-            cmd[0] = diff_pos[0]/9
-            cmd[1] = diff_pos[1]/9
-
-
-        # if obs["agent"]["body_state"]["world_pos"][1] - self.goal_center[1] >= 0.5 and \
-        #     obs["agent"]["body_state"]["angular_velocities"][1] > -0.1 :
-        #     cmd[0] = 1*cmd[0]/3
-        #     cmd[1] = 1*cmd[1]/3
-        #     cmd[2] = 1/2
-        # elif obs["agent"]["body_state"]["world_pos"][1] - self.goal_center[1] < -0.5 and \
-        #     obs["agent"]["body_state"]["angular_velocities"][1] < 0.1:
-        #     cmd[0] = 1*cmd[0]/3
-        #     cmd[1] = 1*cmd[1]/3
-        #     cmd[2] = -1/2
-        # elif obs["agent"]["body_state"]["world_pos"][1] - self.goal_center[1] >= 0.45 and \
-        #       obs["agent"]["body_state"]["world_pos"][1] - self.goal_center[1] < 0.5:
-        #     cmd[0] = 2*cmd[0]/3
-        #     cmd[1] = 2*cmd[1]/3
-        #     cmd[2] = 1/6
-        # elif obs["agent"]["body_state"]["world_pos"][1] - self.goal_center[1] < -0.45 and \
-        #     obs["agent"]["body_state"]["world_pos"][1] - self.goal_center[1] >= -0.5:
-        #     cmd[0] = 2*cmd[0]/3
-        #     cmd[1] = 2*cmd[1]/3
-        #     cmd[2] = -1/6
-        # elif obs["agent"]["body_state"]["world_pos"][1] - self.goal_center[1] >= 0.3 and \
-        #       obs["agent"]["body_state"]["world_pos"][1] - self.goal_center[1] < 0.4 and \
-        #         obs["agent"]["body_state"]["angular_velocities"][1] > 0:
-        #     cmd[2] = 1/9
-        # elif obs["agent"]["body_state"]["world_pos"][1] - self.goal_center[1] < -0.3 and \
-        #      obs["agent"]["body_state"]["world_pos"][1] - self.goal_center[1] >= -0.4 and \
-        #         obs["agent"]["body_state"]["angular_velocities"][1] < 0:
-        #     cmd[2] = -1/9
-        # elif obs["agent"]["body_state"]["world_pos"][1] - self.goal_center[1] >= 0.2 and \
-        #       obs["agent"]["body_state"]["world_pos"][1] - self.goal_center[1] < 0.3 and \
-        #         obs["agent"]["body_state"]["angular_velocities"][1] > 0:
-        #     cmd[2] = 1/12
-        # elif obs["agent"]["body_state"]["world_pos"][1] - self.goal_center[1] < -0.2 and \
-        #      obs["agent"]["body_state"]["world_pos"][1] - self.goal_center[1] >= -0.3 and \
-        #         obs["agent"]["body_state"]["angular_velocities"][1] < 0:
-        #     cmd[2] = -1/12
-        # elif obs["agent"]["body_state"]["world_pos"][1] - self.goal_center[1] >= 0.1 and \
-        #      obs["agent"]["body_state"]["world_pos"][1] - self.goal_center[1] < 0.2:
-        #     cmd[2] = 1/18
-        # elif obs["agent"]["body_state"]["world_pos"][1] - self.goal_center[1] < -0.1 and \
-        #     obs["agent"]["body_state"]["world_pos"][1] - self.goal_center[1]>=-0.2:
-        #     cmd[2] = -1/18
-        # else:
-        #     cmd[2] = 0
+        cmd[1] = -diff_pos[0]/4
         
+        if diff_pos[0] > 0.1 and roll_world_orient_deg < 85:
+            cmd[0] = 0.2
+            cmd[2] = -1/4
+        elif diff_pos[0] < -0.1 and roll_world_orient_deg > 95:
+            cmd[0] = 0.2
+            cmd[2] = 1/4
+        else:
+            cmd[0] = 0.25
+            cmd[2] = 0
+
         self.cnt_ += 1
         print(self.cnt_)
 
