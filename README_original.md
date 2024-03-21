@@ -1,4 +1,4 @@
-# 人形机器人创新挑战赛仿真赛
+# 人形机器人创新挑战赛
 
 Bipedal Robot Challenge powered by TongVerse-Lite.
 
@@ -11,18 +11,21 @@ Bipedal Robot Challenge powered by TongVerse-Lite.
 
 ### Setting up Docker
 
-1. **Load the Docker Image**
+1. **Download Docker Image**
+   URL: `https://roban.lejurobot.com/humanoid-tongverselite/tongverselite-release-docker_20240104.tar.gz`
+   Use your webbrowser or wget command to download this docker image to your computer.
+   wget command:
+   ```bash
+   wget https://roban.lejurobot.com/humanoid-tongverselite/tongverselite-release-docker_20240104.tar.gz -O tongverselite-release-docker.tar.gz
+   ```
 
-   Download the image file from: `https://roban.lejurobot.com/humanoid-tongverselite/tongverselite-release-docker_20240104.tar.gz`.
-
-   Use md5sum to check the download image by run: `md5sum -c checksum.txt`. Attention: you should keep the download file which named tongverselite-release-docker_20240104.tar.gz as the sampe path of checksum.txt.
-
+2. **Load the Docker Image**
    Run the following command:
    ```bash
    docker load -i tongverselite-release-docker.tar.gz
    ```
 
-2. **Launch the Docker Image**
+3. **Launch the Docker Image**
    To set up the TongVerse-Lite environment, execute:
    ```bash
    bash docker-run-release.sh
@@ -37,12 +40,6 @@ Once you are in the Docker environment, you can start a demo with:
 bash examples/launch_task.sh <task-id>
 ```
 Replace `<task-id>` with an integer between 1 and 6 to select the specific demo task you want to present.
-
-## Customzie the contoller
-
-1. source code path: ./controller_example
-2. perpare env and compile source code command : https://gitee.com/leju-robot/leju_kuavo_tongverse-lite/blob/main/controller_example/README.md
-3. after creat new controller file, copy it to the folder in the docker container:`/leju_controller/`
 
 ## Development & Submission Guidelines
 
@@ -282,15 +279,38 @@ Goal center position <x, y, z>: [1.94795, -9.1162, 0.1]
 
 Goal center position <x, y, z>: [0.23457, -3.53851, 0.296]
 
-**Task 5**:
+**Task 5**
 
 Goal center position <x, y, z>: [0.23457, -1.44135, 0.593]
 
-**Task 2 & 3 & 6**
+**Tasks 2, 3, and 6**
 
-No further information provided. 
+No further information provided.
 
-Since the scene is static, you can hard code anything you want as long as the robot could accomplish the task from a random initial state.
+As the scene is static, you can hard-code any necessary information to ensure the robot can accomplish the task from a random initial state.
+
+**Camera Configuration**
+
+The camera intrinsic matrix is given as follows:
+
+```python
+K = [
+    [1154.47387, 0, 540],
+    [0, 1154.47387, 360],
+    [0, 0, 1]
+]
+```
+
+In _Task 6_, the camera is mounted on the torso of the robot, meaning the camera moves along with the robot. The transformation from the torso link to the camera link is given as follows:
+
+```python
+tf_torso_camera = [
+    [-0.7071068, 0.0000000, -0.7071068, -0.41],
+    [-0.0000000, -1.0000000, 0.0000000, 0.00],
+    [-0.7071068, 0.0000000, 0.7071068, 1.20],
+    [0, 0, 0, 1]
+]
+```
 
 ### Testing Your Solution
 

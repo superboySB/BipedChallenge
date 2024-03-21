@@ -6,36 +6,89 @@ import numpy as np
 
 from tongverselite.solver import TaskSolverBase
 from tongverselite.tcp import PersistentTcpClient, json2bin
+import time
 
 
-class DummyPlanner:
-    """A dummy planner for task 3 (seed = 88)
+class OurPlanner:
+    """A dummy planner for task 1 (seed = 66)
 
     It produces a pre-computed velocity command for accomplishing
-    task 1 with random seed 88.
+    task 1 with random seed 66.
     """
 
     def __init__(self) -> None:
-        # get directory of this file
-        dir_path = os.path.dirname(os.path.realpath(__file__))
-        # pre-computed velocity command sequence
-        cmd_file = f"{dir_path}/task4_cmd.npz"
-
-        self.cmds_ = np.load(cmd_file)["cmd"]
-
+        self.goal_center = np.array([1.94795, -9.1162, 0.1])
         self.cnt_ = 0
 
     def plan(self, obs: dict) -> List:
         assert isinstance(obs, dict)
+        
+        cmd = np.array([0, 0, 0, -1]).astype(np.float32)
 
-        # repeat last cmd when reach the end
-        if self.cnt_ == len(self.cmds_):
-            return self.cmds_[-1]
+        diff_pos = self.goal_center - obs["agent"]["body_state"]["world_pos"]
 
-        cmd = self.cmds_[self.cnt_]
+
+        if self.cnt_ < 3000:
+            cmd[0] = diff_pos[0]/9
+            cmd[1] = diff_pos[1]/9
+        elif self.cnt_ >= 3000 and self.cnt_ < 13000:
+            cmd[0] = diff_pos[0]/9
+            cmd[1] = diff_pos[1]/9
+            cmd[2] = 0.35
+        else:
+            cmd[0] = diff_pos[0]/9
+            cmd[1] = diff_pos[1]/9
+
+
+        # if obs["agent"]["body_state"]["world_pos"][1] - self.goal_center[1] >= 0.5 and \
+        #     obs["agent"]["body_state"]["angular_velocities"][1] > -0.1 :
+        #     cmd[0] = 1*cmd[0]/3
+        #     cmd[1] = 1*cmd[1]/3
+        #     cmd[2] = 1/2
+        # elif obs["agent"]["body_state"]["world_pos"][1] - self.goal_center[1] < -0.5 and \
+        #     obs["agent"]["body_state"]["angular_velocities"][1] < 0.1:
+        #     cmd[0] = 1*cmd[0]/3
+        #     cmd[1] = 1*cmd[1]/3
+        #     cmd[2] = -1/2
+        # elif obs["agent"]["body_state"]["world_pos"][1] - self.goal_center[1] >= 0.45 and \
+        #       obs["agent"]["body_state"]["world_pos"][1] - self.goal_center[1] < 0.5:
+        #     cmd[0] = 2*cmd[0]/3
+        #     cmd[1] = 2*cmd[1]/3
+        #     cmd[2] = 1/6
+        # elif obs["agent"]["body_state"]["world_pos"][1] - self.goal_center[1] < -0.45 and \
+        #     obs["agent"]["body_state"]["world_pos"][1] - self.goal_center[1] >= -0.5:
+        #     cmd[0] = 2*cmd[0]/3
+        #     cmd[1] = 2*cmd[1]/3
+        #     cmd[2] = -1/6
+        # elif obs["agent"]["body_state"]["world_pos"][1] - self.goal_center[1] >= 0.3 and \
+        #       obs["agent"]["body_state"]["world_pos"][1] - self.goal_center[1] < 0.4 and \
+        #         obs["agent"]["body_state"]["angular_velocities"][1] > 0:
+        #     cmd[2] = 1/9
+        # elif obs["agent"]["body_state"]["world_pos"][1] - self.goal_center[1] < -0.3 and \
+        #      obs["agent"]["body_state"]["world_pos"][1] - self.goal_center[1] >= -0.4 and \
+        #         obs["agent"]["body_state"]["angular_velocities"][1] < 0:
+        #     cmd[2] = -1/9
+        # elif obs["agent"]["body_state"]["world_pos"][1] - self.goal_center[1] >= 0.2 and \
+        #       obs["agent"]["body_state"]["world_pos"][1] - self.goal_center[1] < 0.3 and \
+        #         obs["agent"]["body_state"]["angular_velocities"][1] > 0:
+        #     cmd[2] = 1/12
+        # elif obs["agent"]["body_state"]["world_pos"][1] - self.goal_center[1] < -0.2 and \
+        #      obs["agent"]["body_state"]["world_pos"][1] - self.goal_center[1] >= -0.3 and \
+        #         obs["agent"]["body_state"]["angular_velocities"][1] < 0:
+        #     cmd[2] = -1/12
+        # elif obs["agent"]["body_state"]["world_pos"][1] - self.goal_center[1] >= 0.1 and \
+        #      obs["agent"]["body_state"]["world_pos"][1] - self.goal_center[1] < 0.2:
+        #     cmd[2] = 1/18
+        # elif obs["agent"]["body_state"]["world_pos"][1] - self.goal_center[1] < -0.1 and \
+        #     obs["agent"]["body_state"]["world_pos"][1] - self.goal_center[1]>=-0.2:
+        #     cmd[2] = -1/18
+        # else:
+        #     cmd[2] = 0
+        
         self.cnt_ += 1
+        print(self.cnt_)
 
-        return cmd
+        return cmd.tolist()
 
 
 class BipedWalkingCtrlClient(PersistentTcpClient):
@@ -76,10 +129,12 @@ class BipedWalkingCtrlClient(PersistentTcpClient):
 class TaskSolver(TaskSolverBase):
     def __init__(self) -> None:
         super().__init__()
-        self.planner_ = DummyPlanner()
+        self.planner_ = OurPlanner()
         self.ctrl_client_ = BipedWalkingCtrlClient(ip="0.0.0.0", port=8800)
 
     def next_action(self, obs: dict) -> dict:
+        # time.sleep(0.1)
+        
         # plan for velocity cmd
         velocity_cmd = self.planner_.plan(obs)
 
