@@ -51,7 +51,7 @@ class DummyPlanner:
             if self.cnt_ == len(self.cmds_)-1000:
                 cmd = self.cmds_[-1000]
                 cmd[-1] = 0
-                cmd[2] = 1/24
+                cmd[2] = 1/20
                 return cmd.tolist()
 
             cmd = self.cmds_[self.cnt_]

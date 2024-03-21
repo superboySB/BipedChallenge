@@ -52,10 +52,10 @@ class OurPlanner:
             cmd[0] = 0.2
             cmd[2] = 1/4
         else:
-            cmd[0] = 0.25
+            cmd[0] = 0.27
             cmd[2] = 0
 
-        if self.cnt_ < 4000:
+        if self.cnt_ > 4000:
             cmd[0] = 0.35
 
         self.cnt_ += 1
