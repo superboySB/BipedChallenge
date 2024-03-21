@@ -45,12 +45,18 @@ class DummyPlanner:
 
         if (np.abs(diff_pos[0]) < 0.01 and np.abs(diff_pos[1]) < 0.01 and np.abs(diff_pos[2]) < 0.2 and np.abs(diff_roll) < 0.01) or (self.cnt_!= 0):
             print(self.cnt_)
+            print(obs["pick"])
 
             # repeat last cmd when reach the end
             if self.cnt_ == len(self.cmds_):
                 return self.cmds_[-1]
 
             cmd = self.cmds_[self.cnt_]
+        
+            
+            if self.cnt_ > 16500 and self.cnt_ < 17000:
+                cmd[-1] = 0
+
             self.cnt_ += 1
             
         else:
@@ -142,6 +148,7 @@ class TaskSolver(TaskSolverBase):
                 ],
             },
             "pick": "left_hand" if velocity_cmd[7] == 1 else None,
+            "release": True if velocity_cmd[7] == 0 else False,
         }
         if obs["pick"] is True:
             action["arms"]["stiffness"] = [10] * 4 + [20] * 4
