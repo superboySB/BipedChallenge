@@ -30,6 +30,11 @@ bash examples/launch_task.sh <task-id>
 ```sh
 bash submission/launch_task.sh <task-id>
 ```
+比赛提交默认就是
+```sh
+zip -r BIT-LINC+人形机器人创新挑战赛.zip submission/
+```
+然后把压缩包发到报名系统的附件里好像就行了。
 
 ## Useful Tips
 对于example文件来说，维护行为树(task 1-5)，可以压缩和解压文件，会导致原始文件被删除，比赛官方提供的标注为`example`
