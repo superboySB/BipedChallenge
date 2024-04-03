@@ -43,7 +43,7 @@ class OurPlanner:
             print(pitch_world_orient_deg)
             print(roll_world_orient_deg)
 
-        cmd[1] = -diff_pos[0]/4
+        cmd[1] = -diff_pos[0]/4.5
         
         if diff_pos[0] > 0.1 and roll_world_orient_deg < 85:
             cmd[0] = 0.2
