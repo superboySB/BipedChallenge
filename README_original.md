@@ -29,6 +29,7 @@ Bipedal Robot Challenge powered by TongVerse-Lite.
    To set up the TongVerse-Lite environment, execute:
    ```bash
    bash docker-run-release.sh
+   bash docker-pip-installer.sh
    ```
    This script binds your local repository directory to `/BipedChallenge/` inside Docker and initiates a new bash shell.
 
@@ -51,6 +52,10 @@ Replace `<task-id>` with an integer between 1 and 6 to select the specific demo 
    Create your custom `TaskSolver` for each task in `submission/task_<id>_solver`. Please note:
    - Do not modify any code outside the `task_<id>_solver` directories.
    - Modifications to `task_launcher.py` or other core files are strictly prohibited.
+
+### Other Python Package Dependencies
+
+You could append other python packages you need at the end of file [docker-pip-install.sh](docker-pip-install.sh), and run `bash docker-pip-install.sh` **every time** after launching the docker image.
 
 ### Implementing Your Solver
 
@@ -312,21 +317,37 @@ tf_torso_camera = [
 ]
 ```
 
-### Testing Your Solution
+## Example Solutions
+
+Example solutions for the designated tasks can be found in the [example_solutions](./example_solutions) directory. These solutions provide potential approaches, but optimality is not guaranteed.
+
+To run an example solution, use the following command:
+
+```bash
+bash example_solutions/launch_task.sh <task-id>
+```
+
+Replace `<task-id>` with an integer from 1 to 6 corresponding to the task you are testing. Currently, **an example solution is only provided for task 1**.
+
+## Testing Your Solution
 
 To test your `TaskSolver`, execute:
+
 ```bash
 bash submission/launch_task.sh <task-id>
 ```
+
 Replace `<task-id>` with an integer from 1 to 6 corresponding to the task you are testing.
 
-### Preparing for Submission
+## Preparing for Submission
 
 1. **Compress Your Work**
-   Compress the entire [submission](./submission/) folder.
+    Compress the entire [submission](./submission/) folder.
 
 2. **Rename the File**
-   Name the compressed file as `submission_<team-id>`.
+    Name the compressed file as `submission_<team-id>`.
 
 3. **Submit to the Committee**
-   Send your renamed submission file to our committee group for evaluation.
+    Send your renamed submission file to our committee group for evaluation.
+
+## [Supplementary Document for Competition Rules](./docs/Supplementary_Document_for_Competition_Rules.md)

@@ -25,13 +25,8 @@ bash examples/launch_task.sh <task-id>
 
 ![demo](./docs/demo.gif)
 
-## 训练
-这玩意不训练controller不行呀，还是需要训练，如果遇到nucleus的问题可能需要初步联网、并且插一个屏幕
-```sh
-bash xxx
-```
 ## 运行our solution
-很显然solution将不卡随机种子，需要泛化性策略
+很显然solution不像example那样子卡随机种子，所以需要泛化性策略
 ```sh
 bash submission/launch_task.sh <task-id>
 ```
@@ -43,4 +38,7 @@ gzip -c task{id}_cmd.json > task{id}_cmd.json.gz   # 压缩
 
 # gunzip task_{id}_cmd.json,gz # 解压(用于还原检查完整性)
 ```
-
+这玩意不训练controller不行呀，还是需要训练，如果遇到nucleus的问题可能需要初步联网、并且插一个屏幕
+```sh
+bash xxx
+```
